@@ -143,3 +143,4 @@ ENV/
 .idea/
 cmake-build-debug/
 __MACOSX/
+.DS_Store
