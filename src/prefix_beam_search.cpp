@@ -2,7 +2,7 @@
 // Created by Kaiyu Xie on 2021/3/14.
 //
 
-#include <map>
+#include <unordered_map>
 #include <cmath>
 #include <vector>
 #include <cfloat>
@@ -11,6 +11,18 @@
 #include "pybind11/numpy.h"
 
 namespace py = pybind11;
+
+
+class uint32_vector_hasher {
+public:
+    std::size_t operator()(std::vector<int> const &vec) const {
+        std::size_t seed = vec.size();
+        for (auto &i : vec) {
+            seed ^= i + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+        return seed;
+    }
+};
 
 float logsumexp(const std::vector<float> &nums) {
     bool all_neg_inf = true;
@@ -46,7 +58,7 @@ std::pair<std::vector<int>, float> decode(py::array_t<float> probs, int beam_siz
     for (int t = 0; t < T; ++t) {
         // Loop over time
 
-        std::map<std::vector<int>, std::pair<float, float>> next_beam;
+        std::unordered_map<std::vector<int>, std::pair<float, float>, uint32_vector_hasher> next_beam;
 
         for (int s = 0; s < S; ++s) {
             // Loop over vocab
