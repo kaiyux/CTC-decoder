@@ -142,5 +142,6 @@ ENV/
 .vscode/
 .idea/
 cmake-build-debug/
+cmake-build-release/
 __MACOSX/
 .DS_Store
