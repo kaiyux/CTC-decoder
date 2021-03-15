@@ -4,6 +4,9 @@ This repo is a cpp reimplementation for `Awni Hannun`'s version of CTC decoder. 
 ## Usage
 Firstly
 ```bash
+mkdir cmake-build-release
+cd cmake-build-release
+
 /path/to/cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" /path/to/CTC-decoder
 
 /path/to/cmake --build /path/to/CTC-decoder/cmake-build-release --target ctcdecoder -- -j 4
