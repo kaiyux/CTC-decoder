@@ -46,7 +46,6 @@ def decode(probs, beam_size=10, blank=0):
     log-likelihood estimated by the decoder.
     """
     T, S = probs.shape
-    probs = np.log(probs)
 
     # Elements in the beam are (prefix, (p_blank, p_no_blank))
     # Initialize the beam with the empty sequence, a probability of
@@ -108,17 +107,3 @@ def decode(probs, beam_size=10, blank=0):
 
     best = beam[0]
     return best[0], -logsumexp(*best[1])
-
-
-if __name__ == "__main__":
-    np.random.seed(3)
-
-    time = 50
-    output_dim = 20
-
-    probs = np.random.rand(time, output_dim)
-    probs = probs / np.sum(probs, axis=1, keepdims=True)
-
-    labels, score = decode(probs)
-    print(labels)
-    print("Score {:.3f}".format(score))
